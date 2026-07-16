@@ -1,0 +1,23 @@
+@baseUrl = http://localhost:3001
+
+### REGISTER
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+  "name": "João da Silva",
+  "email": "joaodasilva@gmail.com",
+  "password": "Jo123456"
+}
+
+### LOGIN
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "admin@demo.com",
+  "password": "Admin@123"
+}
+
+### ME
+GET {{baseUrl}}/me
