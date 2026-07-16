@@ -1,17 +1,18 @@
 @baseUrl = http://localhost:3001
 
 ### REGISTER
-POST {{baseUrl}}/register
+POST {{baseUrl}}/auth/signup
 Content-Type: application/json
 
 {
   "name": "João da Silva",
-  "email": "joaodasilva@gmail.com",
-  "password": "Jo123456"
+  "email": "user01@gmail.com",
+  "password": "123456"
+
 }
 
 ### LOGIN
-POST {{baseUrl}}/login
+POST {{baseUrl}}/auth/singin
 Content-Type: application/json
 
 {
