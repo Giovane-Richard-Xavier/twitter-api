@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Request,
 } from '@nestjs/common';
 import { TweetService } from './tweet.service';
 import { CreateTweetDto } from './dto/create-tweet.dto';
@@ -16,8 +17,9 @@ export class TweetController {
   constructor(private readonly tweetService: TweetService) {}
 
   @Post()
-  addTweet(@Body() createTweetDto: CreateTweetDto) {
-    return this.tweetService.addTweet(createTweetDto);
+  addTweet(@Request() req: { user: any }, @Body() dto: CreateTweetDto) {
+    console.log('user controller->', req.user);
+    return this.tweetService.addTweet(req.user, dto);
   }
 
   @Get()

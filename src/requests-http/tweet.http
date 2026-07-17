@@ -1,0 +1,11 @@
+@baseUrl = http://localhost:3001
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqb2FvLWRhLXNpbHZhNzIwOSIsImVtYWlsIjoidXNlcjAxQGdtYWlsLmNvbSIsIm5hbWUiOiJKb8OjbyBkYSBTaWx2YSIsImlhdCI6MTc4NDMwNTMyOSwiZXhwIjoxNzg0MzkxNzI5fQ.x1eZWanCLLUWDQakpyzRLKaM9SimG8sGSS5kNWj2dTU
+
+### ADD TWEET
+POST {{baseUrl}}/tweet
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "body": "Olá, tudo bem?"
+}

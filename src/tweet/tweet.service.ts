@@ -8,7 +8,7 @@ import { getPublicURL } from '../utils/url';
 export class TweetService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async addTweet(dto: CreateTweetDto) {
+  async addTweet(user: any, dto: CreateTweetDto) {
     // verifica se é resposta
     if (dto.answer) {
       const hasAnswerTweet = await this.findTweet(dto.answer);
@@ -18,10 +18,20 @@ export class TweetService {
       }
     }
 
+    console.log('user ->', user);
+
     // cria o tweet
+    const newTweet = await this.prisma.tweet.create({
+      data: {
+        userSlug: user.id,
+        body: dto.body,
+        answerOf: dto.answer ?? 0,
+      },
+    });
+
     //adicionaa hashtag ao tend
 
-    return 'This action adds a new tweet';
+    return newTweet;
   }
 
   async findAllTweet() {

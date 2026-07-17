@@ -10,9 +10,12 @@ import { UserFromJwt } from '../models/userFromJwt';
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor() {
     super({
-      jwtFromRequest: ExtractJwt.fromExtractors([
-        (req: Request) => req?.cookies?.token,
-      ]),
+      // HTTP only
+      // jwtFromRequest: ExtractJwt.fromExtractors([
+      //   (req: Request) => req?.cookies?.token,
+      // ]),
+
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
       secretOrKey: process.env.JWT_SECRET as string,
     });
