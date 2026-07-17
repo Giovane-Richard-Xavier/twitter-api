@@ -4,15 +4,16 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
-import { AuthUser } from '../types/auth-user';
-import { UserPayload } from './models/userPayload';
 import { JwtService } from '@nestjs/jwt';
-import { CreateUserDto } from '../user/dto/create-user.dto';
-import bcrypt from 'bcrypt';
-import { UserService } from '../user/user.service';
+import bcrypt, { compare } from 'bcrypt';
 import slug from 'slug';
+import { PrismaService } from '../prisma/prisma.service';
+import { CreateUserDto } from '../user/dto/create-user.dto';
+import { UserService } from '../user/user.service';
 import { getPublicURL } from '../utils/url';
+import { SignInDto } from './dtos/auth.dto';
+import { UserPayload } from './models/userPayload';
+import { AuthUser } from '../types/auth-user';
 
 @Injectable()
 export class AuthService {
@@ -22,7 +23,19 @@ export class AuthService {
     private readonly userService: UserService,
   ) {}
 
-  async login(user: AuthUser) {
+  async signin(user: any) {
+    // const user = await this.userService.findUserByEmail(email);
+
+    // if (!user) {
+    //   throw new UnauthorizedException('User unauthorized.');
+    // }
+
+    // const verifyPass = await compare(password, user.password);
+
+    // if (!verifyPass) {
+    //   throw new UnauthorizedException('User unauthorized.');
+    // }
+
     const payload: UserPayload = {
       sub: user.slug,
       email: user.email,
@@ -31,7 +44,15 @@ export class AuthService {
 
     const token = this.jwtService.sign(payload);
 
-    return { token, user: payload };
+    return {
+      token,
+      user: {
+        name: user.name,
+        slug: user.slug,
+        avatar: getPublicURL(user.avatar),
+        cover: getPublicURL(user.cover),
+      },
+    };
   }
 
   async signup(dto: CreateUserDto) {

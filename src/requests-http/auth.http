@@ -6,18 +6,18 @@ Content-Type: application/json
 
 {
   "name": "João da Silva",
-  "email": "user01@gmail.com",
+  "email": "user02@gmail.com",
   "password": "123456"
 
 }
 
 ### LOGIN
-POST {{baseUrl}}/auth/singin
+POST {{baseUrl}}/auth/signin
 Content-Type: application/json
 
 {
-  "email": "admin@demo.com",
-  "password": "Admin@123"
+  "email": "user01@gmail.com",
+  "password": "123456"
 }
 
 ### ME
