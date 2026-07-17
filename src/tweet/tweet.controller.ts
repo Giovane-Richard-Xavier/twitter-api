@@ -21,13 +21,13 @@ export class TweetController {
   }
 
   @Get()
-  findAll() {
-    return this.tweetService.findAll();
+  findAllTweet() {
+    return this.tweetService.findAllTweet();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.tweetService.findOne(+id);
+  findTweet(@Param('id') id: string) {
+    return this.tweetService.findTweet(+id);
   }
 
   @Patch(':id')
