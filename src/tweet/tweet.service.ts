@@ -30,6 +30,15 @@ export class TweetService {
     });
 
     //adicionaa hashtag ao tend
+    const hashhtags = dto.body.match(/#[a-zA-Z0-9_]+/g);
+
+    if (hashhtags) {
+      for (let hashtag of hashhtags) {
+        if (hashtag.length >= 2) {
+          await this.addHashtag(hashtag);
+        }
+      }
+    }
 
     return newTweet;
   }
@@ -62,6 +71,26 @@ export class TweetService {
       return tweet;
     }
     return null;
+  }
+
+  async addHashtag(hashtag: string) {
+    const hs = await this.prisma.trend.findFirst({
+      where: { hashtag },
+    });
+
+    if (hs) {
+      await this.prisma.trend.update({
+        where: { id: hs.id },
+        data: {
+          counter: hs.counter + 1,
+          updatedAt: new Date(),
+        },
+      });
+    } else {
+      await this.prisma.trend.create({
+        data: { hashtag },
+      });
+    }
   }
 
   update(id: number, updateTweetDto: UpdateTweetDto) {

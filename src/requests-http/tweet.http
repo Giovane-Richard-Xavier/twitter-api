@@ -1,5 +1,5 @@
 @baseUrl = http://localhost:3001
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqb2FvLWRhLXNpbHZhNzIwOSIsImVtYWlsIjoidXNlcjAxQGdtYWlsLmNvbSIsIm5hbWUiOiJKb8OjbyBkYSBTaWx2YSIsImlhdCI6MTc4NDMwNTMyOSwiZXhwIjoxNzg0MzkxNzI5fQ.x1eZWanCLLUWDQakpyzRLKaM9SimG8sGSS5kNWj2dTU
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqb2FvLWRhLXNpbHZhNzIwOSIsImVtYWlsIjoidXNlcjAxQGdtYWlsLmNvbSIsIm5hbWUiOiJKb8OjbyBkYSBTaWx2YSIsImlhdCI6MTc4NTE1MTYyOSwiZXhwIjoxNzg1MjM4MDI5fQ.d2A60KDIUB2YLG_Az1cqm_h2c-uCzxnzJEGMB4U-l0Q
 
 ### ADD TWEET
 POST {{baseUrl}}/tweet
@@ -7,5 +7,5 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "body": "Olá, tudo bem?"
+  "body": "E ai!, #bomdia e vou me preparar agora para #estudar"
 }
