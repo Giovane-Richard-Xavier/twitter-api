@@ -7,6 +7,7 @@ import {
   Patch,
   Post,
   Query,
+  Request,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -38,6 +39,11 @@ export class UserController {
     @Query() params: ParamsPaginationDto,
   ) {
     return this.userService.getUserTweets(slug, params);
+  }
+
+  @Post(':slug/follow')
+  likeToggle(@Request() req: { user: any }, @Param('slug') slug: string) {
+    return this.userService.followToggle(req.user, slug);
   }
 
   @Get(':id')

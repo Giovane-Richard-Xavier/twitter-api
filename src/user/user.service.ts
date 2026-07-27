@@ -116,6 +116,53 @@ export class UserService {
     };
   }
 
+  async followToggle(user: any, slug: string) {
+    console.log('user->', user);
+    const hasUserToBeFollowed = await this.findUserBySlug(slug);
+
+    if (!hasUserToBeFollowed) {
+      throw new NotFoundException('User not found!');
+    }
+
+    const me = user.id;
+
+    const follow = await this.checkIfFollows(me, slug);
+
+    if (!follow) {
+      await this.follow(me, slug);
+      return { following: true };
+    } else {
+      await this.unfollow(me, slug);
+      return { following: false };
+    }
+  }
+
+  async checkIfFollows(user1Slug: string, user2Slug: string) {
+    const follow = await this.prisma.follow.findFirst({
+      where: { user1Slug, user2Slug },
+    });
+
+    return follow ? true : false;
+  }
+
+  async follow(user1Slug: string, user2Slug: string) {
+    await this.prisma.follow.create({
+      data: {
+        user1Slug,
+        user2Slug,
+      },
+    });
+  }
+
+  async unfollow(user1Slug: string, user2Slug: string) {
+    await this.prisma.follow.deleteMany({
+      where: {
+        user1Slug,
+        user2Slug,
+      },
+    });
+  }
+
   findAll() {
     return `This action returns all user`;
   }
