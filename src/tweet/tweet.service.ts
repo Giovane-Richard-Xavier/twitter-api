@@ -18,8 +18,6 @@ export class TweetService {
       }
     }
 
-    console.log('user ->', user);
-
     // cria o tweet
     const newTweet = await this.prisma.tweet.create({
       data: {
@@ -93,6 +91,73 @@ export class TweetService {
         data: { hashtag },
       });
     }
+  }
+
+  async getAnswers(id: number) {
+    const answers = await this.prisma.tweet.findMany({
+      where: { answerOf: id },
+      include: {
+        user: {
+          select: {
+            name: true,
+            avatar: true,
+            slug: true,
+          },
+        },
+        likes: {
+          select: {
+            userSlug: true,
+          },
+        },
+      },
+    });
+
+    if (!answers) {
+      throw new NotFoundException('Tweet not found!');
+    }
+
+    answers.map((item) => (item.user.avatar = getPublicURL(item.user.avatar)));
+
+    return answers;
+  }
+
+  async likeToggle(user: any, id: number) {
+    const liked = await this.checkIfTweetIsLikedByUser(user.id, id);
+
+    if (liked) {
+      this.unlikeTweet(user.id, id);
+    } else {
+      this.likeTweet(user.id, id);
+    }
+  }
+
+  async checkIfTweetIsLikedByUser(slug: string, id: number) {
+    const isLiked = await this.prisma.tweetLike.findFirst({
+      where: {
+        userSlug: slug,
+        tweetId: id,
+      },
+    });
+
+    return isLiked ? true : false;
+  }
+
+  async unlikeTweet(slug: string, id: number) {
+    await this.prisma.tweetLike.deleteMany({
+      where: {
+        userSlug: slug,
+        tweetId: id,
+      },
+    });
+  }
+
+  async likeTweet(slug: string, id: number) {
+    await this.prisma.tweetLike.create({
+      data: {
+        userSlug: slug,
+        tweetId: id,
+      },
+    });
   }
 
   update(id: number, updateTweetDto: UpdateTweetDto) {

@@ -18,7 +18,6 @@ export class TweetController {
 
   @Post()
   addTweet(@Request() req: { user: any }, @Body() dto: CreateTweetDto) {
-    console.log('user controller->', req.user);
     return this.tweetService.addTweet(req.user, dto);
   }
 
@@ -30,6 +29,16 @@ export class TweetController {
   @Get(':id')
   findTweet(@Param('id') id: string) {
     return this.tweetService.findTweet(+id);
+  }
+
+  @Get(':id/answers')
+  getAnswers(@Param('id') id: string) {
+    return this.tweetService.getAnswers(+id);
+  }
+
+  @Post(':id/like')
+  likeToggle(@Request() req: { user: any }, @Param('id') id: string) {
+    return this.tweetService.likeToggle(req.user, +id);
   }
 
   @Patch(':id')

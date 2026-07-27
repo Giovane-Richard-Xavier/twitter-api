@@ -1,5 +1,11 @@
-import { Transform } from 'class-transformer';
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { Transform, Type } from 'class-transformer';
+import {
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  IsPositive,
+  IsString,
+} from 'class-validator';
 
 export class CreateTweetDto {
   @IsNotEmpty()
@@ -10,6 +16,9 @@ export class CreateTweetDto {
   image?: string;
 
   @IsOptional()
-  @Transform(() => Number)
+  // @Transform(({ value }) => Number(value))
+  @Type(() => Number)
+  @IsInt()
+  @IsPositive()
   answer?: number;
 }

@@ -8,9 +8,19 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "body": "E ai!, #bomdia e vou me preparar agora para #estudar"
+  "body": "Eu também gostei da observação",
+  "answer": 1
 }
 
 ### FIND TWEET BY ID
 GET {{baseUrl}}/tweet/{{tweetId}}
+Authorization: Bearer {{token}}
+
+### GET ANSWERS
+GET {{baseUrl}}/tweet/{{tweetId}}/answers
+Authorization: Bearer {{token}}
+
+### LIKED 
+POST  {{baseUrl}}/tweet/{{tweetId}}/like
+Content-Type: application/json
 Authorization: Bearer {{token}}
