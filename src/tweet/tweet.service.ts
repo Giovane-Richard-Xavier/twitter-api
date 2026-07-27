@@ -66,11 +66,13 @@ export class TweetService {
       },
     });
 
-    if (tweet) {
-      tweet.user.avatar = getPublicURL(tweet.user.avatar);
-      return tweet;
+    if (!tweet) {
+      throw new NotFoundException('Tweet not found!');
     }
-    return null;
+
+    tweet.user.avatar = getPublicURL(tweet.user.avatar);
+
+    return tweet;
   }
 
   async addHashtag(hashtag: string) {
