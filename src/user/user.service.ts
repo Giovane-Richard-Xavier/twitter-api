@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Request } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { getPublicURL } from '../utils/url';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -163,16 +163,21 @@ export class UserService {
     });
   }
 
+  async updateUserInfo(user: any, data: UpdateUserDto) {
+    const slug = user.id;
+
+    await this.prisma.user.update({
+      where: { slug },
+      data,
+    });
+  }
+
   findAll() {
     return `This action returns all user`;
   }
 
   findOne(id: number) {
     return `This action returns a #${id} user`;
-  }
-
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
   }
 
   remove(id: number) {

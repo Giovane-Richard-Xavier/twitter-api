@@ -15,3 +15,14 @@ Authorization: Bearer {{token}}
 POST {{baseUrl}}/user/{{slug}}/follow
 Content-Type: application/json
 Authorization: Bearer {{token}}
+
+### UPDATE USER INFO
+PATCH  {{baseUrl}}/user
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Giovane Richard",
+  "bio": "Estou testando os dados da minha bio",
+  "link": "https://www.youtube.com/@giovanerichard171"
+}
