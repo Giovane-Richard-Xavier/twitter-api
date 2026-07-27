@@ -16,8 +16,8 @@ services:
     depends_on:
       - db
     environment:
-      - NODE_ENV=development
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432/twitter_db?schema=public
+      NODE_ENV: ${NODE_ENV}
+      DATABASE_URL: ${DATABASE_URL}
   db:
     build: .docker/postgres
     container_name: twitter_db
@@ -50,7 +50,6 @@ services:
 
 volumes:
   node_modules_app:
-  db-data:
 
 networks:
   main-network:

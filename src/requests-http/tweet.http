@@ -1,0 +1,26 @@
+@baseUrl = http://localhost:3001
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqb2FvLWRhLXNpbHZhNzIwOSIsImVtYWlsIjoidXNlcjAxQGdtYWlsLmNvbSIsIm5hbWUiOiJKb8OjbyBkYSBTaWx2YSIsImlhdCI6MTc4NTE1MTYyOSwiZXhwIjoxNzg1MjM4MDI5fQ.d2A60KDIUB2YLG_Az1cqm_h2c-uCzxnzJEGMB4U-l0Q
+@tweetId=4
+
+### ADD TWEET
+POST {{baseUrl}}/tweet
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "body": "Eu também gostei da observação",
+  "answer": 1
+}
+
+### FIND TWEET BY ID
+GET {{baseUrl}}/tweet/{{tweetId}}
+Authorization: Bearer {{token}}
+
+### GET ANSWERS
+GET {{baseUrl}}/tweet/{{tweetId}}/answers
+Authorization: Bearer {{token}}
+
+### LIKED 
+POST  {{baseUrl}}/tweet/{{tweetId}}/like
+Content-Type: application/json
+Authorization: Bearer {{token}}
