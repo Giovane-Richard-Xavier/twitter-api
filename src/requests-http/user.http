@@ -7,5 +7,5 @@ GET {{baseUrl}}/user/{{slug}}
 Authorization: Bearer {{token}}
 
 ### GET TWEETS TO THE USER BY SLUG
-GET {{baseUrl}}/user/{{slug}}/tweets
+GET {{baseUrl}}/user/{{slug}}/tweets?page=2&limit=2
 Authorization: Bearer {{token}}

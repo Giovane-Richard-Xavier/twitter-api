@@ -3,6 +3,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { getPublicURL } from '../utils/url';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { ParamsPaginationDto } from '../common/dto/params-pagination.dto';
 
 @Injectable()
 export class UserService {
@@ -85,7 +86,35 @@ export class UserService {
     });
   }
 
-  async getUserTweets(slug: string) {}
+  async getUserTweets(slug: string, params: ParamsPaginationDto) {
+    const { page = 1, limit = 10, sort = 'desc' } = params;
+
+    const currentPage = Math.max(page, 1);
+    const perPage = Math.max(limit, 1);
+    const skip = (currentPage - 1) * perPage;
+
+    const [total, tweets] = await this.prisma.$transaction([
+      this.prisma.tweet.count({ where: { userSlug: slug } }),
+      this.prisma.tweet.findMany({
+        where: { userSlug: slug, answerOf: 0 },
+        skip,
+        take: perPage,
+        orderBy: { createdAt: sort },
+        include: {
+          likes: {
+            select: { userSlug: true },
+          },
+        },
+      }),
+    ]);
+
+    return {
+      tweets,
+      total,
+      page: currentPage,
+      perPage,
+    };
+  }
 
   findAll() {
     return `This action returns all user`;

@@ -6,10 +6,12 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './user.service';
+import { ParamsPaginationDto } from '../common/dto/params-pagination.dto';
 
 @Controller('user')
 export class UserController {
@@ -28,6 +30,14 @@ export class UserController {
   @Get(':slug')
   getUser(@Param('slug') slug: string) {
     return this.userService.getUser(slug);
+  }
+
+  @Get(':slug/tweets')
+  getUserTweets(
+    @Param('slug') slug: string,
+    @Query() params: ParamsPaginationDto,
+  ) {
+    return this.userService.getUserTweets(slug, params);
   }
 
   @Get(':id')
