@@ -1,3 +1,11 @@
 @baseUrl = http://localhost:3001
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqb2FvLWRhLXNpbHZhNzIwOSIsImVtYWlsIjoidXNlcjAxQGdtYWlsLmNvbSIsIm5hbWUiOiJKb8OjbyBkYSBTaWx2YSIsImlhdCI6MTc4NTE1MTYyOSwiZXhwIjoxNzg1MjM4MDI5fQ.d2A60KDIUB2YLG_Az1cqm_h2c-uCzxnzJEGMB4U-l0Q
+@slug = joao-da-silva7209
 
-### CREATE
+### GET USER BY SLUG
+GET {{baseUrl}}/user/{{slug}}
+Authorization: Bearer {{token}}
+
+### GET TWEETS TO THE USER BY SLUG
+GET {{baseUrl}}/user/{{slug}}/tweets
+Authorization: Bearer {{token}}
