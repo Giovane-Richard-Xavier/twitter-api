@@ -7,5 +7,6 @@ import { PrismaModule } from '../prisma/prisma.module';
   imports: [PrismaModule],
   controllers: [TweetController],
   providers: [TweetService],
+  exports: [TweetService],
 })
 export class TweetModule {}

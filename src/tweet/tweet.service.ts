@@ -3,6 +3,7 @@ import { CreateTweetDto } from './dto/create-tweet.dto';
 import { UpdateTweetDto } from './dto/update-tweet.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { getPublicURL } from '../utils/url';
+import { ParamsPaginationDto } from '../common/dto/params-pagination.dto';
 
 @Injectable()
 export class TweetService {
@@ -158,6 +159,87 @@ export class TweetService {
         tweetId: id,
       },
     });
+  }
+
+  async findTweetFeed(
+    following: string[],
+    currentPage: number,
+    perPage: number,
+  ) {
+    const skip = (currentPage - 1) * perPage;
+
+    const tweets = await this.prisma.tweet.findMany({
+      where: {
+        userSlug: { in: following },
+        answerOf: 0,
+      },
+      skip,
+      take: perPage,
+      orderBy: { createdAt: 'desc' },
+      include: {
+        user: {
+          select: {
+            name: true,
+            avatar: true,
+            slug: true,
+          },
+        },
+        likes: {
+          select: {
+            userSlug: true,
+          },
+        },
+      },
+    });
+
+    tweets.map((item) => (item.user.avatar = getPublicURL(item.user.avatar)));
+
+    return { tweets };
+  }
+
+  // async searchTweets(params: ParamsPaginationDto) {}
+
+  async searchTweets(params: ParamsPaginationDto) {
+    const { page = 1, limit = 10, sort = 'desc', q: bodyContains } = params;
+
+    const currentPage = Math.max(page, 1);
+    const perPage = Math.max(limit, 1);
+    const skip = (currentPage - 1) * perPage;
+
+    const tweets = await this.prisma.tweet.findMany({
+      where: {
+        body: {
+          contains: bodyContains,
+          mode: 'insensitive',
+        },
+        answerOf: 0,
+      },
+      skip,
+      take: perPage,
+      orderBy: { createdAt: sort },
+      include: {
+        user: {
+          select: {
+            name: true,
+            avatar: true,
+            slug: true,
+          },
+        },
+        likes: {
+          select: {
+            userSlug: true,
+          },
+        },
+      },
+    });
+
+    tweets.map((item) => (item.user.avatar = getPublicURL(item.user.avatar)));
+
+    return {
+      tweets,
+      page: currentPage,
+      perPage,
+    };
   }
 
   update(id: number, updateTweetDto: UpdateTweetDto) {

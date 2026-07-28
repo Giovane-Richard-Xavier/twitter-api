@@ -1,5 +1,6 @@
 @baseUrl = http://localhost:3001
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqb2FvLWRhLXNpbHZhNzIwOSIsImVtYWlsIjoidXNlcjAxQGdtYWlsLmNvbSIsIm5hbWUiOiJKb8OjbyBkYSBTaWx2YSIsImlhdCI6MTc4NTE1MTYyOSwiZXhwIjoxNzg1MjM4MDI5fQ.d2A60KDIUB2YLG_Az1cqm_h2c-uCzxnzJEGMB4U-l0Q
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqb2FvLWRhLXNpbHZhNDE2NDYzIiwiZW1haWwiOiJ1c2VyMDJAZ21haWwuY29tIiwibmFtZSI6Ikpvw6NvIGRhIFNpbHZhIiwiaWF0IjoxNzg1MjM5OTA2LCJleHAiOjE3ODUzMjYzMDZ9.y_dKsjCtRK9pKmfF0Ar5Zh2YuqNce6E1Nf3qOqYr6as
+
 @tweetId=4
 
 ### ADD TWEET
@@ -8,9 +9,12 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "body": "Eu também gostei da observação",
-  "answer": 1
+  "body": "Olá sou novo por aqui!"
 }
+
+### SEARCH TWEET
+GET {{baseUrl}}/tweet/search?page=1&limit=10&q=estu
+Authorization: Bearer {{token}}
 
 ### FIND TWEET BY ID
 GET {{baseUrl}}/tweet/{{tweetId}}

@@ -1,0 +1,7 @@
+@baseUrl = http://localhost:3001
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqb2FvLWRhLXNpbHZhNzIwOSIsImVtYWlsIjoidXNlcjAxQGdtYWlsLmNvbSIsIm5hbWUiOiJHaW92YW5lIFJpY2hhcmQiLCJpYXQiOjE3ODUyNDAxNDIsImV4cCI6MTc4NTMyNjU0Mn0.oOFz-R-oVThDPXBrAvFNYk2bWUcjA44KIps81P1cfbo
+
+### GET FEED
+GET {{baseUrl}}/feed?page=1&limit=2
+Authorization: Bearer {{token}}
+

@@ -17,4 +17,7 @@ export class ParamsPaginationDto {
   @IsOptional()
   @IsEnum(['asc', 'desc'])
   sort?: 'asc' | 'desc' = 'desc';
+
+  @IsOptional()
+  q?: string;
 }

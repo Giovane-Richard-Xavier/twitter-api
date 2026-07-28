@@ -7,10 +7,12 @@ import {
   Param,
   Delete,
   Request,
+  Query,
 } from '@nestjs/common';
 import { TweetService } from './tweet.service';
 import { CreateTweetDto } from './dto/create-tweet.dto';
 import { UpdateTweetDto } from './dto/update-tweet.dto';
+import { ParamsPaginationDto } from '../common/dto/params-pagination.dto';
 
 @Controller('tweet')
 export class TweetController {
@@ -19,6 +21,11 @@ export class TweetController {
   @Post()
   addTweet(@Request() req: { user: any }, @Body() dto: CreateTweetDto) {
     return this.tweetService.addTweet(req.user, dto);
+  }
+
+  @Get('search')
+  searchTweets(@Query() params: ParamsPaginationDto) {
+    return this.tweetService.searchTweets(params);
   }
 
   @Get()
