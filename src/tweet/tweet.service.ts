@@ -197,6 +197,51 @@ export class TweetService {
     return { tweets };
   }
 
+  // async searchTweets(params: ParamsPaginationDto) {}
+
+  async searchTweets(params: ParamsPaginationDto) {
+    const { page = 1, limit = 10, sort = 'desc', q: bodyContains } = params;
+
+    const currentPage = Math.max(page, 1);
+    const perPage = Math.max(limit, 1);
+    const skip = (currentPage - 1) * perPage;
+
+    const tweets = await this.prisma.tweet.findMany({
+      where: {
+        body: {
+          contains: bodyContains,
+          mode: 'insensitive',
+        },
+        answerOf: 0,
+      },
+      skip,
+      take: perPage,
+      orderBy: { createdAt: sort },
+      include: {
+        user: {
+          select: {
+            name: true,
+            avatar: true,
+            slug: true,
+          },
+        },
+        likes: {
+          select: {
+            userSlug: true,
+          },
+        },
+      },
+    });
+
+    tweets.map((item) => (item.user.avatar = getPublicURL(item.user.avatar)));
+
+    return {
+      tweets,
+      page: currentPage,
+      perPage,
+    };
+  }
+
   update(id: number, updateTweetDto: UpdateTweetDto) {
     return `This action updates a #${id} tweet`;
   }
