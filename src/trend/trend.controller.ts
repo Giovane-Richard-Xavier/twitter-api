@@ -1,4 +1,12 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
+import { TrendService } from './trend.service';
 
-@Controller('trend')
-export class TrendController {}
+@Controller()
+export class TrendController {
+  constructor(private readonly trendService: TrendService) {}
+
+  @Get('trending')
+  async getTrends() {
+    return this.trendService.getTrends();
+  }
+}
