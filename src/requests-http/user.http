@@ -1,7 +1,11 @@
 @baseUrl = http://localhost:3001
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqb2FvLWRhLXNpbHZhNzIwOSIsImVtYWlsIjoidXNlcjAxQGdtYWlsLmNvbSIsIm5hbWUiOiJKb8OjbyBkYSBTaWx2YSIsImlhdCI6MTc4NTE1MTYyOSwiZXhwIjoxNzg1MjM4MDI5fQ.d2A60KDIUB2YLG_Az1cqm_h2c-uCzxnzJEGMB4U-l0Q
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqb2FvLWRhLXNpbHZhNzIwOSIsImVtYWlsIjoidXNlcjAxQGdtYWlsLmNvbSIsIm5hbWUiOiJHaW92YW5lIFJpY2hhcmQiLCJpYXQiOjE3ODUyNDAxNDIsImV4cCI6MTc4NTMyNjU0Mn0.oOFz-R-oVThDPXBrAvFNYk2bWUcjA44KIps81P1cfbo
 @slug = joao-da-silva7209
 @slug2 = joao-da-silva416463
+
+### GET SUGGESTIONS USER
+GET {{baseUrl}}/user/suggestions
+Authorization: Bearer {{token}}
 
 ### GET USER BY SLUG
 GET {{baseUrl}}/user/{{slug}}

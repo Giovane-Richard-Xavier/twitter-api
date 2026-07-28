@@ -4,6 +4,7 @@ import { getPublicURL } from '../utils/url';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ParamsPaginationDto } from '../common/dto/params-pagination.dto';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class UserService {
@@ -183,6 +184,32 @@ export class UserService {
       where: { slug },
       data,
     });
+  }
+
+  async getUserSuggestions(user: any) {
+    const slug = user.id;
+
+    type Suggestions = Pick<
+      Prisma.UserGetPayload<Prisma.UserDefaultArgs>,
+      'name' | 'avatar' | 'slug'
+    >;
+
+    const following = await this.getUserFollowing(slug);
+    const followingPlusMe = [...following, slug];
+
+    const suggestions: Suggestions[] = await this.prisma.$queryRaw`
+      SELECT
+        name, avatar, slug
+      FROM "User"
+      WHERE
+        slug NOT IN (${followingPlusMe.join(',')})
+      ORDER BY RANDOM()
+      LIMIT 2;
+    `;
+
+    suggestions.map((item) => (item.avatar = getPublicURL(item.avatar)));
+
+    return suggestions;
   }
 
   findAll() {

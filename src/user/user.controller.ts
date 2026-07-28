@@ -28,6 +28,10 @@ export class UserController {
     return this.userService.findAll();
   }
 
+  @Get('/suggestions')
+  getUserSuggestions(@Request() req: { user: any }) {
+    return this.userService.getUserSuggestions(req.user);
+  }
   @Get(':slug')
   getUser(@Param('slug') slug: string) {
     return this.userService.getUser(slug);
