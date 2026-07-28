@@ -163,6 +163,19 @@ export class UserService {
     });
   }
 
+  async getUserFollowing(slug: string) {
+    const reqFollow = await this.prisma.follow.findMany({
+      where: { user1Slug: slug },
+      select: {
+        user2Slug: true,
+      },
+    });
+
+    const following = reqFollow.map((item) => item.user2Slug);
+
+    return following;
+  }
+
   async updateUserInfo(user: any, data: UpdateUserDto) {
     const slug = user.id;
 
