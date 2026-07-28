@@ -8,9 +8,10 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guards';
 import { TweetModule } from './tweet/tweet.module';
 import { FeedModule } from './feed/feed.module';
+import { TrendModule } from './trend/trend.module';
 
 @Module({
-  imports: [PrismaModule, UserModule, AuthModule, TweetModule, FeedModule],
+  imports: [PrismaModule, UserModule, AuthModule, TweetModule, FeedModule, TrendModule],
   controllers: [AppController],
   providers: [
     AppService,
